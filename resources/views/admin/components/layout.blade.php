@@ -216,6 +216,12 @@
               <p> Post </p>
             </router-link>           
           </li>
+          <li class="nav-item menu-open">
+            <router-link to="/Posts" class="nav-link ">
+              <i class="nav-icon fas fa-home"></i>
+              <p> Post </p>
+            </router-link>           
+          </li>
           
           
         </ul>
