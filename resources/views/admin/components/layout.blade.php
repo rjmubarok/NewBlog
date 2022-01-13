@@ -217,9 +217,9 @@
             </router-link>           
           </li>
           <li class="nav-item menu-open">
-            <router-link to="/users" class="nav-link ">
+            <router-link to="/tags" class="nav-link ">
               <i class="nav-icon fas fa-home"></i>
-              <p> Users </p>
+              <p> Tag </p>
             </router-link>           
           </li>
           
