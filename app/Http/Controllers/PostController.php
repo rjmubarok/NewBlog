@@ -86,4 +86,33 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->delete();
     }
+    public function removeitem(Request $request){
+        $sl =0;
+        foreach($request->ids as $id){
+           $posts=Post::find($id);
+            $posts->delete();
+            $sl++;
+
+        }
+        $success = $sl>0? true:false;
+        return response()->json([
+            'success'=>$success ,
+            'total'=>$sl
+        ],200);
+    }
+    public function ChangeStatus(Request $request){
+        $sl =0;
+        foreach($request->ids as $id){
+           $posts=Post::find($id);
+           $posts->status=$request->status;
+            $posts->update();
+            $sl++;
+
+        }
+        $success = $sl>0? true:false;
+        return response()->json([
+            'success'=>$success ,
+            'total'=>$sl
+        ],200);
+    }
 }

@@ -91,11 +91,75 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "post",
+  data: function data() {
+    return {
+      selected: [],
+      selectedAll: false,
+      Isselected: false
+    };
+  },
   mounted: function mounted() {
     return this.$store.dispatch("getPost");
+  },
+  watch: {
+    selected: function selected(_selected) {
+      this.Isselected = _selected.length > 0;
+      this.selectedAll = _selected.length === this.getpostall.length;
+    }
   },
   computed: {
     getpostall: function getpostall() {
@@ -139,6 +203,51 @@ __webpack_require__.r(__webpack_exports__);
     },
     emtyData: function emtyData() {
       return this.getpostall.length < 1;
+    },
+    selectAll: function selectAll() {
+      var _this2 = this;
+
+      if (event.target.checked == false) {
+        this.selected = [];
+      } else {
+        this.getpostall.forEach(function (post) {
+          if (_this2.selected.indexOf(post.id)) {
+            _this2.selected.push(post.id);
+          }
+        });
+      }
+    },
+    removeitems: function removeitems(selected) {
+      var _this3 = this;
+
+      this.confirm(function () {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("/post/remove-items", {
+          ids: selected
+        }).then(function (response) {
+          Swal.fire("Deleted!", response.data.total + "Category has been deleted Successfully !.", "success");
+          _this3.selected = [];
+          _this3.selectAll = false;
+          _this3.Isselected = false;
+
+          _this3.$store.dispatch("getPost");
+        })["catch"](function (error) {});
+      });
+    },
+    ChangeStatus: function ChangeStatus(selected, status) {
+      var _this4 = this;
+
+      var msg = status === 1 ? "Active" : "Inactive";
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/post/Change-Status", {
+        ids: selected,
+        status: status
+      }).then(function (response) {
+        toastr.success(response.data.total + "  Category has been  Successfully " + msg);
+
+        _this4.$store.dispatch("getPost");
+
+        _this4.selected = [];
+        _this4.selectAll = false;
+      });
     }
   }
 });
@@ -253,13 +362,115 @@ var render = function () {
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("table", { staticClass: "table table-bordered" }, [
-              _vm._m(0),
+              _c("thead", [
+                _c("tr", [
+                  _c("th", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selectedAll,
+                          expression: "selectedAll",
+                        },
+                      ],
+                      attrs: { disabled: _vm.emtyData(), type: "checkbox" },
+                      domProps: {
+                        checked: Array.isArray(_vm.selectedAll)
+                          ? _vm._i(_vm.selectedAll, null) > -1
+                          : _vm.selectedAll,
+                      },
+                      on: {
+                        click: function ($event) {
+                          return _vm.selectAll()
+                        },
+                        change: function ($event) {
+                          var $$a = _vm.selectedAll,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.selectedAll = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.selectedAll = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.selectedAll = $$c
+                          }
+                        },
+                      },
+                    }),
+                  ]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("ID")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("Title")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("Content")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("Image")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("Category")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("Created By")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("Status")]),
+                  _vm._v(" "),
+                  _c("th", [_vm._v("Action")]),
+                ]),
+              ]),
               _vm._v(" "),
               _c(
                 "tbody",
                 [
                   _vm._l(_vm.getpostall, function (post, index) {
                     return _c("tr", { key: post.id }, [
+                      _c("td", [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected,
+                              expression: "selected",
+                            },
+                          ],
+                          attrs: { type: "checkbox" },
+                          domProps: {
+                            value: post.id,
+                            checked: Array.isArray(_vm.selected)
+                              ? _vm._i(_vm.selected, post.id) > -1
+                              : _vm.selected,
+                          },
+                          on: {
+                            change: function ($event) {
+                              var $$a = _vm.selected,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = post.id,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 && (_vm.selected = $$a.concat([$$v]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.selected = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.selected = $$c
+                              }
+                            },
+                          },
+                        }),
+                      ]),
+                      _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(++index))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(post.title))]),
@@ -332,44 +543,106 @@ var render = function () {
                     ])
                   }),
                   _vm._v(" "),
-                  _vm.emtyData() ? _c("tr", [_vm._m(1)]) : _vm._e(),
+                  !_vm.emtyData()
+                    ? _c("tr", [
+                        _c("td", { attrs: { colspan: "2" } }, [
+                          _c("div", { staticClass: "dropdown" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-info dropdown-toggle",
+                                attrs: {
+                                  disabled: !_vm.Isselected,
+                                  type: "button",
+                                  id: "dropdownMenuButton",
+                                  "data-bs-toggle": "dropdown",
+                                  "aria-expanded": "false",
+                                },
+                              },
+                              [
+                                _vm._v(
+                                  "\n                      Action\n                    "
+                                ),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "dropdown-menu" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "dropdown-item btn btn-sm btn-danger",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.removeitems(_vm.selected)
+                                    },
+                                  },
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                        Remove\n                      "
+                                  ),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "dropdown-item btn btn-sm btn-danger",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.ChangeStatus(_vm.selected, 1)
+                                    },
+                                  },
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                        Active\n                      "
+                                  ),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "dropdown-item btn btn-sm btn-danger",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.ChangeStatus(_vm.selected, 0)
+                                    },
+                                  },
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                        Inactive\n                      "
+                                  ),
+                                ]
+                              ),
+                            ]),
+                          ]),
+                        ]),
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.emtyData() ? _c("tr", [_vm._m(0)]) : _vm._e(),
                 ],
                 2
               ),
             ]),
           ]),
           _vm._v(" "),
-          _vm._m(2),
+          _vm._m(1),
         ]),
       ]),
     ]),
   ])
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("ID")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Title")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Content")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Image")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Category")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Created By")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Status")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Action")]),
-      ]),
-    ])
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
