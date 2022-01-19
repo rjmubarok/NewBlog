@@ -11,8 +11,21 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <form class="form-horizontal" @submit.prevent="addPost">
+            <form class="form-horizontal" @submit.prevent="addPost()" enctype="multipart/form-data">
               <div class="card-body">
+                <div class="form-group row">
+                  <label for="category_id" class="col-sm-2 col-form-label"> Category</label>
+                  <div class="col-sm-10">
+                   <select name="category_id" id="category_id" class="form-control" v-model="form.category_id">
+                     <option value="" style="display: none;" selected>Select Category</option>
+                     <option :value="category.id" v-for="category in GetCategory" :key="category.id">{{category.name}}</option>
+                   </select>
+                    <div
+                      v-if="form.errors.has('category_id')"
+                      v-html="form.errors.get('category_id')"
+                    />
+                  </div>
+                </div>
                 <div class="form-group row">
                   <label for="inputEmail3" class="col-sm-2 col-form-label"> Title</label>
                   <div class="col-sm-10">
@@ -120,23 +133,31 @@ export default {
       content: null,
       img: null,
       user_id: null,
-      category_id: null,
+      category_id: '',
       status: 1,
     }),
   }),
+   mounted() {
+    this.$store.dispatch("getcategoriess");
+  },
+   computed: {
+    GetCategory() {
+      return this.$store.getters.getCategories;
+    },
+  },
   methods: {
     addPost() {
       let test = this;
-      this.form.post("/store-post").then(function (response) {
+      // this.form.post("/store-post").then(function (response) {
       
-        toastr.success("Post Added Successfully");
-        test.form.title = null;
-        test.form.content = null;
-        test.form.img = null;
-        test.form.user_id = null;
-        test.form.category_id = null;
-        test.form.status = null;
-      });
+      //   toastr.success("Post Added Successfully");
+      //   test.form.title = null;
+      //   test.form.content = null;
+      //   test.form.img = null;
+      //   test.form.user_id = null;
+      //   test.form.category_id = null;
+      //   test.form.status = null;
+      // });
     },
   },
   mounted() {

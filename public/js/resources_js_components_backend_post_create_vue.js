@@ -12,6 +12,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.es.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -126,7 +141,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_defineProperty({
   data: function data() {
     return {
       form: new vform__WEBPACK_IMPORTED_MODULE_0__["default"]({
@@ -134,29 +149,35 @@ __webpack_require__.r(__webpack_exports__);
         content: null,
         img: null,
         user_id: null,
-        category_id: null,
+        category_id: '',
         status: 1
       })
     };
   },
-  methods: {
-    addPost: function addPost() {
-      var test = this;
-      this.form.post("/store-post").then(function (response) {
-        toastr.success("Post Added Successfully");
-        test.form.title = null;
-        test.form.content = null;
-        test.form.img = null;
-        test.form.user_id = null;
-        test.form.category_id = null;
-        test.form.status = null;
-      });
+  mounted: function mounted() {
+    this.$store.dispatch("getcategoriess");
+  },
+  computed: {
+    GetCategory: function GetCategory() {
+      return this.$store.getters.getCategories;
     }
   },
-  mounted: function mounted() {
-    this.addPost();
+  methods: {
+    addPost: function addPost() {
+      var test = this; // this.form.post("/store-post").then(function (response) {
+      //   toastr.success("Post Added Successfully");
+      //   test.form.title = null;
+      //   test.form.content = null;
+      //   test.form.img = null;
+      //   test.form.user_id = null;
+      //   test.form.category_id = null;
+      //   test.form.status = null;
+      // });
+    }
   }
-});
+}, "mounted", function mounted() {
+  this.addPost();
+}));
 
 /***/ }),
 
@@ -271,15 +292,96 @@ var render = function () {
               "form",
               {
                 staticClass: "form-horizontal",
+                attrs: { enctype: "multipart/form-data" },
                 on: {
                   submit: function ($event) {
                     $event.preventDefault()
-                    return _vm.addPost.apply(null, arguments)
+                    return _vm.addPost()
                   },
                 },
               },
               [
                 _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-2 col-form-label",
+                        attrs: { for: "category_id" },
+                      },
+                      [_vm._v(" Category")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-10" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.category_id,
+                              expression: "form.category_id",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { name: "category_id", id: "category_id" },
+                          on: {
+                            change: function ($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function (o) {
+                                  return o.selected
+                                })
+                                .map(function (o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.form,
+                                "category_id",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            },
+                          },
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              staticStyle: { display: "none" },
+                              attrs: { value: "", selected: "" },
+                            },
+                            [_vm._v("Select Category")]
+                          ),
+                          _vm._v(" "),
+                          _vm._l(_vm.GetCategory, function (category) {
+                            return _c(
+                              "option",
+                              {
+                                key: category.id,
+                                domProps: { value: category.id },
+                              },
+                              [_vm._v(_vm._s(category.name))]
+                            )
+                          }),
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _vm.form.errors.has("category_id")
+                        ? _c("div", {
+                            domProps: {
+                              innerHTML: _vm._s(
+                                _vm.form.errors.get("category_id")
+                              ),
+                            },
+                          })
+                        : _vm._e(),
+                    ]),
+                  ]),
+                  _vm._v(" "),
                   _c("div", { staticClass: "form-group row" }, [
                     _c(
                       "label",
