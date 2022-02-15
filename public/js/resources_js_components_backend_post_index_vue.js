@@ -142,6 +142,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "post",
@@ -517,7 +529,7 @@ var render = function () {
                               staticClass: "btn btn-sm btn-info",
                               attrs: { to: "/edit-post/" + post.id },
                             },
-                            [_vm._v(" Edit")]
+                            [_vm._v("\n                    Edit")]
                           ),
                           _vm._v(" "),
                           _c(

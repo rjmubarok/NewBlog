@@ -25,6 +25,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // category
 Route::get('/get-categories', [App\Http\Controllers\CategoryController::class, 'index'])->name('categories');
+Route::get('/get-Active-Categories', [App\Http\Controllers\CategoryController::class, 'getActiveCategories']);
 Route::post('/store-category', [App\Http\Controllers\CategoryController::class, 'store'])->name('store-category');
 Route::get('/edit-category/{id}', [App\Http\Controllers\CategoryController::class, 'edit'])->name('edit-category');
 Route::post('/update-category/{id}', [App\Http\Controllers\CategoryController::class, 'update'])->name('update-category');

@@ -1,11 +1,14 @@
 <template>
   <div>
-    <div class="row pt-3"> 
+    <div class="row pt-3">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">Post</h3>
-            <router-link to="/add-post" class="btn btn-success btn-sm float-right">
+            <router-link
+              to="/add-post"
+              class="btn btn-success btn-sm float-right"
+            >
               Add Post</router-link
             >
           </div>
@@ -14,7 +17,7 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-                   <th>
+                  <th>
                     <input
                       :disabled="emtyData()"
                       type="checkbox"
@@ -23,7 +26,7 @@
                     />
                   </th>
                   <th>ID</th>
-                 
+
                   <th>Title</th>
                   <th>Content</th>
                   <th>Image</th>
@@ -36,12 +39,16 @@
               <tbody>
                 <tr v-for="(post, index) in getpostall" :key="post.id">
                   <td>
-                    <input type="checkbox" :value="post.id" v-model="selected" />
+                    <input
+                      type="checkbox"
+                      :value="post.id"
+                      v-model="selected"
+                    />
                   </td>
                   <td>{{ ++index }}</td>
                   <td>{{ post.title }}</td>
                   <td>{{ post.content | subString(25) }}.........</td>
-                  <td><img :src="post.img" alt="" width="60px"></td>
+                  <td><img :src="post.img" alt="" width="60px" /></td>
                   <td>{{ post.category.name }}</td>
                   <td>{{ post.user.name }}</td>
                   <td>
@@ -50,7 +57,12 @@
                     >
                   </td>
                   <td>
-                  <router-link :to="`/edit-post/${post.id}`" class="btn btn-sm btn-info"> Edit</router-link>
+                    <router-link
+                      :to="`/edit-post/${post.id}`"
+                      class="btn btn-sm btn-info"
+                    >
+                      Edit</router-link
+                    >
                     <a
                       class="btn btn-sm btn-danger"
                       @click.prevent="removepost(post.id)"
@@ -59,7 +71,7 @@
                     </a>
                   </td>
                 </tr>
-                 <tr v-if="!emtyData()">
+                <tr v-if="!emtyData()">
                   <td colspan="2">
                     <div class="dropdown">
                       <button
@@ -98,7 +110,7 @@
                     </div>
                   </td>
                 </tr>
-                  <tr v-if="emtyData()">
+                <tr v-if="emtyData()">
                   <td colspan="9">
                     <h4 class="text-center text-danger">Data Not Found</h4>
                   </td>
@@ -131,7 +143,7 @@
 import axios from "axios";
 export default {
   name: "post",
-   data() {
+  data() {
     return {
       selected: [],
       selectedAll: false,
@@ -141,7 +153,7 @@ export default {
   mounted() {
     return this.$store.dispatch("getPost");
   },
-    watch: {
+  watch: {
     selected: function (selected) {
       this.Isselected = selected.length > 0;
       this.selectedAll = selected.length === this.getpostall.length;
@@ -185,10 +197,10 @@ export default {
         }
       });
     },
-     emtyData() {
+    emtyData() {
       return this.getpostall.length < 1;
     },
-       selectAll: function () {
+    selectAll: function () {
       if (event.target.checked == false) {
         this.selected = [];
       } else {
@@ -199,7 +211,7 @@ export default {
         });
       }
     },
-      removeitems: function (selected) {
+    removeitems: function (selected) {
       this.confirm(() => {
         axios
           .post("/post/remove-items", { ids: selected })

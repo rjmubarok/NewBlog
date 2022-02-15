@@ -36,8 +36,13 @@ import storeData from './store/store'
 const store = new Vuex.Store(
     storeData
 );
+// filter
+
 import { moment } from "./filter/filter";
 import './helpers/mixins'
+// ckeditor
+import { VueEditor } from "vue2-editor";
+Vue.use(VueEditor);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('home', require('./components/frontend/home.vue').default);
 

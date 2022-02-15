@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row pt-3">
-      <div class="col-md-8 offset-2">
+      <div class="col-md-10 offset-1">
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">Post</h3>
@@ -11,15 +11,34 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <form class="form-horizontal" @submit.prevent="addPost()" enctype="multipart/form-data">
+            <form
+              class="form-horizontal"
+              @submit.prevent="addPost()"
+              enctype="multipart/form-data"
+            >
               <div class="card-body">
                 <div class="form-group row">
-                  <label for="category_id" class="col-sm-2 col-form-label"> Category</label>
+                  <label for="category_id" class="col-sm-2 col-form-label">
+                    Category</label
+                  >
                   <div class="col-sm-10">
-                   <select name="category_id" id="category_id" class="form-control" v-model="form.category_id">
-                     <option value="" style="display: none;" selected>Select Category</option>
-                     <option :value="category.id" v-for="category in GetCategory" :key="category.id">{{category.name}}</option>
-                   </select>
+                    <select
+                      name="category_id"
+                      id="category_id"
+                      class="form-control"
+                      v-model="form.category_id"
+                    >
+                      <option value="" style="display: none" selected>
+                        Select Category
+                      </option>
+                      <option
+                        :value="category.id"
+                        v-for="category in GetCategory"
+                        :key="category.id"
+                      >
+                        {{ category.name }}
+                      </option>
+                    </select>
                     <div
                       v-if="form.errors.has('category_id')"
                       v-html="form.errors.get('category_id')"
@@ -27,7 +46,9 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label"> Title</label>
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">
+                    Title</label
+                  >
                   <div class="col-sm-10">
                     <input
                       type="text"
@@ -43,20 +64,13 @@
                     />
                   </div>
                 </div>
-               
+
                 <div class="form-group row">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label"
+                  <label for="content" class="col-sm-2 col-form-label"
                     >Content</label
                   >
                   <div class="col-sm-10">
-                    <textarea
-                      type="text"
-                      class="form-control"
-                      id="content"
-                      placeholder="Content"
-                      v-model="form.content"
-                      name="content"
-                    />
+                    <vue-editor v-model="form.content"></vue-editor>
                     <div
                       v-if="form.errors.has('content')"
                       v-html="form.errors.get('content')"
@@ -64,7 +78,28 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label">Section</label>
+                  <label for="img" class="col-sm-2 col-form-label"
+                    >Tambnail</label
+                  >
+                  <div class="col-sm-10">
+                    <input
+                      type="file"
+                      name="img"
+                      :v-model="form.img"
+                      id="img"
+                      @change="loadimage($event)"
+                    />
+                    <img :src="form.img" alt=""  height="70px"/>
+                    <div
+                      v-if="form.errors.has('img')"
+                      v-html="form.errors.get('img')"
+                    />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label"
+                    >Section</label
+                  >
                   <div class="col-sm-10">
                     <input
                       type="text"
@@ -81,7 +116,9 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="status" class="col-sm-3 col-form-label">Status</label>
+                  <label for="status" class="col-sm-3 col-form-label"
+                    >Status</label
+                  >
                   <div class="col-sm-9">
                     <input
                       class="form-check-input"
@@ -90,7 +127,9 @@
                       id="active"
                       v-model="form.status"
                     />
-                    <label class="form-check-label" for="active"> Active </label>
+                    <label class="form-check-label" for="active">
+                      Active
+                    </label>
                     <input
                       class="form-check-input ml-4"
                       type="radio"
@@ -98,16 +137,24 @@
                       id="Inactive"
                       v-model="form.status"
                     />
-                    <label class="form-check-label ml-5" for="Inactive"> Inactive </label>
+                    <label class="form-check-label ml-5" for="Inactive">
+                      Inactive
+                    </label>
                   </div>
                 </div>
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button type="submit" :disabled="form.busy" class="btn btn-info">
+                <button
+                  type="submit"
+                  :disabled="form.busy"
+                  class="btn btn-info"
+                >
                   Save
                 </button>
-                <button type="reset" class="btn btn-default float-right">Cancel</button>
+                <button type="reset" class="btn btn-default float-right">
+                  Cancel
+                </button>
               </div>
               <!-- /.card-footer -->
             </form>
@@ -125,22 +172,24 @@
   </div>
 </template>
 <script>
+import { VueEditor } from "vue2-editor";
 import Form from "vform";
 export default {
+  components: {
+    VueEditor,
+  },
   data: () => ({
     form: new Form({
       title: null,
       content: null,
       img: null,
       user_id: null,
-      category_id: '',
+      category_id: "",
       status: 1,
     }),
   }),
-   mounted() {
-    this.$store.dispatch("getcategoriess");
-  },
-   computed: {
+
+  computed: {
     GetCategory() {
       return this.$store.getters.getCategories;
     },
@@ -149,7 +198,7 @@ export default {
     addPost() {
       let test = this;
       // this.form.post("/store-post").then(function (response) {
-      
+
       //   toastr.success("Post Added Successfully");
       //   test.form.title = null;
       //   test.form.content = null;
@@ -159,8 +208,19 @@ export default {
       //   test.form.status = null;
       // });
     },
+    loadimage(e) {
+      let test = this;
+      let file = e.target.files[0];
+      let fileReader = new FileReader();
+      fileReader.onload = function (e) {
+        test.form.img=e.target.result
+        
+      };
+      fileReader.readAsDataURL(file);
+    },
   },
   mounted() {
+    this.$store.dispatch("getActiveCategories");
     this.addPost();
   },
 };

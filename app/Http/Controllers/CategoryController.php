@@ -20,6 +20,14 @@ class CategoryController extends Controller
         ],200);
      
     }
+    public function getActiveCategories()
+    {
+        $categories = Category::where('status',1)->get();
+        return response()->json([
+            'categories'=> $categories
+        ],200);
+     
+    }
 
     /**
      * Show the form for creating a new resource.

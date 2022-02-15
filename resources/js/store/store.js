@@ -25,6 +25,13 @@ export default {
                 console.log(error);
             })
         },
+        getActiveCategories(data) {
+            axios.get('get-Active-Categories').then((response) => {
+                data.commit('activecategoriess', response.data.categories)
+            }).catch((error) => {
+                console.log(error);
+            })
+        },
         getEmployees(data) {
             axios.get('get-employees').then((response) => {
                 data.commit('Employeess', response.data.employee)
@@ -44,6 +51,10 @@ export default {
     },
     mutations: {
         categoriess(state, data) {
+            return state.catData = data;
+
+        },
+        activecategoriess(state, data) {
             return state.catData = data;
 
         },

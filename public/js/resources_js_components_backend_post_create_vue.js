@@ -11,151 +11,198 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.es.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+/* harmony import */ var vue2_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue2-editor */ "./node_modules/vue2-editor/dist/vue2-editor.esm.js");
+/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.es.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_defineProperty({
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    VueEditor: vue2_editor__WEBPACK_IMPORTED_MODULE_0__.VueEditor
+  },
   data: function data() {
     return {
-      form: new vform__WEBPACK_IMPORTED_MODULE_0__["default"]({
+      form: new vform__WEBPACK_IMPORTED_MODULE_1__["default"]({
         title: null,
         content: null,
         img: null,
         user_id: null,
-        category_id: '',
+        category_id: "",
         status: 1
       })
     };
-  },
-  mounted: function mounted() {
-    this.$store.dispatch("getcategoriess");
   },
   computed: {
     GetCategory: function GetCategory() {
@@ -173,11 +220,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       //   test.form.category_id = null;
       //   test.form.status = null;
       // });
+    },
+    loadimage: function loadimage(e) {
+      var test = this;
+      var file = e.target.files[0];
+      var fileReader = new FileReader();
+
+      fileReader.onload = function (e) {
+        test.form.img = e.target.result;
+      };
+
+      fileReader.readAsDataURL(file);
     }
+  },
+  mounted: function mounted() {
+    this.$store.dispatch("getActiveCategories");
+    this.addPost();
   }
-}, "mounted", function mounted() {
-  this.addPost();
-}));
+});
 
 /***/ }),
 
@@ -267,7 +327,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "row pt-3" }, [
-      _c("div", { staticClass: "col-md-8 offset-2" }, [
+      _c("div", { staticClass: "col-md-10 offset-1" }, [
         _c("div", { staticClass: "card" }, [
           _c(
             "div",
@@ -309,7 +369,7 @@ var render = function () {
                         staticClass: "col-sm-2 col-form-label",
                         attrs: { for: "category_id" },
                       },
-                      [_vm._v(" Category")]
+                      [_vm._v("\n                  Category")]
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-sm-10" }, [
@@ -353,7 +413,11 @@ var render = function () {
                               staticStyle: { display: "none" },
                               attrs: { value: "", selected: "" },
                             },
-                            [_vm._v("Select Category")]
+                            [
+                              _vm._v(
+                                "\n                      Select Category\n                    "
+                              ),
+                            ]
                           ),
                           _vm._v(" "),
                           _vm._l(_vm.GetCategory, function (category) {
@@ -363,7 +427,13 @@ var render = function () {
                                 key: category.id,
                                 domProps: { value: category.id },
                               },
-                              [_vm._v(_vm._s(category.name))]
+                              [
+                                _vm._v(
+                                  "\n                      " +
+                                    _vm._s(category.name) +
+                                    "\n                    "
+                                ),
+                              ]
                             )
                           }),
                         ],
@@ -389,7 +459,7 @@ var render = function () {
                         staticClass: "col-sm-2 col-form-label",
                         attrs: { for: "inputEmail3" },
                       },
-                      [_vm._v(" Title")]
+                      [_vm._v("\n                  Title")]
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-sm-10" }, [
@@ -435,43 +505,72 @@ var render = function () {
                       "label",
                       {
                         staticClass: "col-sm-2 col-form-label",
-                        attrs: { for: "inputEmail3" },
+                        attrs: { for: "content" },
                       },
                       [_vm._v("Content")]
                     ),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-sm-10" }, [
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
+                    _c(
+                      "div",
+                      { staticClass: "col-sm-10" },
+                      [
+                        _c("vue-editor", {
+                          model: {
                             value: _vm.form.content,
+                            callback: function ($$v) {
+                              _vm.$set(_vm.form, "content", $$v)
+                            },
                             expression: "form.content",
                           },
-                        ],
-                        staticClass: "form-control",
+                        }),
+                        _vm._v(" "),
+                        _vm.form.errors.has("content")
+                          ? _c("div", {
+                              domProps: {
+                                innerHTML: _vm._s(
+                                  _vm.form.errors.get("content")
+                                ),
+                              },
+                            })
+                          : _vm._e(),
+                      ],
+                      1
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-2 col-form-label",
+                        attrs: { for: "img" },
+                      },
+                      [_vm._v("Tambnail")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-10" }, [
+                      _c("input", {
                         attrs: {
-                          type: "text",
-                          id: "content",
-                          placeholder: "Content",
-                          name: "content",
+                          type: "file",
+                          name: "img",
+                          "v-model": _vm.form.img,
+                          id: "img",
                         },
-                        domProps: { value: _vm.form.content },
                         on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "content", $event.target.value)
+                          change: function ($event) {
+                            return _vm.loadimage($event)
                           },
                         },
                       }),
                       _vm._v(" "),
-                      _vm.form.errors.has("content")
+                      _c("img", {
+                        attrs: { src: _vm.form.img, alt: "", height: "70px" },
+                      }),
+                      _vm._v(" "),
+                      _vm.form.errors.has("img")
                         ? _c("div", {
                             domProps: {
-                              innerHTML: _vm._s(_vm.form.errors.get("content")),
+                              innerHTML: _vm._s(_vm.form.errors.get("img")),
                             },
                           })
                         : _vm._e(),
@@ -562,7 +661,11 @@ var render = function () {
                           staticClass: "form-check-label",
                           attrs: { for: "active" },
                         },
-                        [_vm._v(" Active ")]
+                        [
+                          _vm._v(
+                            "\n                    Active\n                  "
+                          ),
+                        ]
                       ),
                       _vm._v(" "),
                       _c("input", {
@@ -590,7 +693,11 @@ var render = function () {
                           staticClass: "form-check-label ml-5",
                           attrs: { for: "Inactive" },
                         },
-                        [_vm._v(" Inactive ")]
+                        [
+                          _vm._v(
+                            "\n                    Inactive\n                  "
+                          ),
+                        ]
                       ),
                     ]),
                   ]),
@@ -612,7 +719,7 @@ var render = function () {
                       staticClass: "btn btn-default float-right",
                       attrs: { type: "reset" },
                     },
-                    [_vm._v("Cancel")]
+                    [_vm._v("\n                Cancel\n              ")]
                   ),
                 ]),
               ]
