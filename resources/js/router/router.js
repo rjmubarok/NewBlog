@@ -81,6 +81,22 @@ const routes = [{
 
 
     },
+    {
+        path: '/tags',
+        name: 'tags',
+        component: () =>
+            import ('../components/backend/tag/index.vue')
+
+
+    },
+    {
+        path: '/add-tag',
+        name: 'tags',
+        component: () =>
+            import ('../components/backend/tag/create.vue')
+
+
+    },
 
 
 ]

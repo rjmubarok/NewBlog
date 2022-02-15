@@ -157,7 +157,7 @@ export default {
     },
   },
   mounted() {
-    this.addEmployee();
+    // this.addEmployee();
   },
 };
 </script>

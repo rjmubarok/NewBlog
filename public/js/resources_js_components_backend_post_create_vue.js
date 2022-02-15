@@ -148,44 +148,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -204,6 +166,9 @@ __webpack_require__.r(__webpack_exports__);
       })
     };
   },
+  mounted: function mounted() {
+    this.$store.dispatch("getActiveCategories"); // this.addPost();
+  },
   computed: {
     GetCategory: function GetCategory() {
       return this.$store.getters.getCategories;
@@ -211,15 +176,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addPost: function addPost() {
-      var test = this; // this.form.post("/store-post").then(function (response) {
-      //   toastr.success("Post Added Successfully");
-      //   test.form.title = null;
-      //   test.form.content = null;
-      //   test.form.img = null;
-      //   test.form.user_id = null;
-      //   test.form.category_id = null;
-      //   test.form.status = null;
-      // });
+      var _this = this;
+
+      var test = this;
+      test.form.post("/add-posts").then(function (response) {
+        toastr.success("Category Added Successfully");
+      })["catch"](function (err) {
+        return console.log(err);
+      })["finally"](function () {
+        return _this.loadin = false;
+      });
     },
     loadimage: function loadimage(e) {
       var test = this;
@@ -232,10 +198,6 @@ __webpack_require__.r(__webpack_exports__);
 
       fileReader.readAsDataURL(file);
     }
-  },
-  mounted: function mounted() {
-    this.$store.dispatch("getActiveCategories");
-    this.addPost();
   }
 });
 
@@ -352,7 +314,7 @@ var render = function () {
               "form",
               {
                 staticClass: "form-horizontal",
-                attrs: { enctype: "multipart/form-data" },
+                attrs: { role: "form", enctype: "multipart/form-data" },
                 on: {
                   submit: function ($event) {
                     $event.preventDefault()
@@ -459,7 +421,7 @@ var render = function () {
                         staticClass: "col-sm-2 col-form-label",
                         attrs: { for: "inputEmail3" },
                       },
-                      [_vm._v("\n                  Title")]
+                      [_vm._v(" Title")]
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-sm-10" }, [
@@ -473,6 +435,7 @@ var render = function () {
                           },
                         ],
                         staticClass: "form-control",
+                        class: { "is-invalid": _vm.form.errors.has("title") },
                         attrs: {
                           type: "text",
                           id: "title",
@@ -581,54 +544,6 @@ var render = function () {
                     _c(
                       "label",
                       {
-                        staticClass: "col-sm-2 col-form-label",
-                        attrs: { for: "inputEmail3" },
-                      },
-                      [_vm._v("Section")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-sm-10" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.section,
-                            expression: "form.section",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          id: "section",
-                          placeholder: "section",
-                          name: "section",
-                        },
-                        domProps: { value: _vm.form.section },
-                        on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "section", $event.target.value)
-                          },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm.form.errors.has("section")
-                        ? _c("div", {
-                            domProps: {
-                              innerHTML: _vm._s(_vm.form.errors.get("section")),
-                            },
-                          })
-                        : _vm._e(),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "label",
-                      {
                         staticClass: "col-sm-3 col-form-label",
                         attrs: { for: "status" },
                       },
@@ -661,11 +576,7 @@ var render = function () {
                           staticClass: "form-check-label",
                           attrs: { for: "active" },
                         },
-                        [
-                          _vm._v(
-                            "\n                    Active\n                  "
-                          ),
-                        ]
+                        [_vm._v(" Active ")]
                       ),
                       _vm._v(" "),
                       _c("input", {
@@ -693,12 +604,12 @@ var render = function () {
                           staticClass: "form-check-label ml-5",
                           attrs: { for: "Inactive" },
                         },
-                        [
-                          _vm._v(
-                            "\n                    Inactive\n                  "
-                          ),
-                        ]
+                        [_vm._v(" Inactive ")]
                       ),
+                      _vm._v(" "),
+                      _c("span", {
+                        class: { "is-invalid": _vm.form.errors.has("status") },
+                      }),
                     ]),
                   ]),
                 ]),
@@ -711,15 +622,6 @@ var render = function () {
                       attrs: { type: "submit", disabled: _vm.form.busy },
                     },
                     [_vm._v("\n                Save\n              ")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-default float-right",
-                      attrs: { type: "reset" },
-                    },
-                    [_vm._v("\n                Cancel\n              ")]
                   ),
                 ]),
               ]

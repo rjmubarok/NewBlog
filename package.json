@@ -26,6 +26,8 @@
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^31.1.0",
+        "@vuelidate/core": "^2.0.0-alpha.34",
+        "@vuelidate/validators": "^2.0.0-alpha.26",
         "admin-lte": "^3.1.0",
         "moment": "^2.29.1",
         "sweetalert2": "^11.3.1",

@@ -72,6 +72,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -85,19 +103,19 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addCategory: function addCategory() {
       var test = this;
-      this.form.post('/store-category').then(function (data) {
+      this.form.post("/store-category").then(function (data) {
         Toast.fire({
-          icon: 'success',
-          title: 'Category Added Successfully'
+          icon: "success",
+          title: "Category Added Successfully"
         });
-        toastr.success('Category Added Successfully');
+        toastr.success("Category Added Successfully");
         test.form.name = null;
-        test.form.status = null; //  test.$router.push('/categories');
+        test.form.status = null;
+        test.$router.push('/categories');
       });
     }
   },
-  mounted: function mounted() {
-    this.addCategory();
+  mounted: function mounted() {// this.addCategory();
   }
 });
 
@@ -203,7 +221,7 @@ var render = function () {
                   staticClass: "btn btn-success btn-sm float-right",
                   attrs: { to: "/categories" },
                 },
-                [_vm._v(" Categories")]
+                [_vm._v("\n            Categories")]
               ),
             ],
             1
@@ -218,7 +236,7 @@ var render = function () {
                 on: {
                   submit: function ($event) {
                     $event.preventDefault()
-                    return _vm.addCategory.apply(null, arguments)
+                    return _vm.addCategory()
                   },
                 },
               },
@@ -308,7 +326,7 @@ var render = function () {
                           staticClass: "form-check-label",
                           attrs: { for: "active" },
                         },
-                        [_vm._v("\n                 Active\n                ")]
+                        [_vm._v(" Active ")]
                       ),
                       _vm._v(" "),
                       _c("input", {
@@ -336,11 +354,7 @@ var render = function () {
                           staticClass: "form-check-label ml-5",
                           attrs: { for: "Inactive" },
                         },
-                        [
-                          _vm._v(
-                            "\n                 Inactive\n                "
-                          ),
-                        ]
+                        [_vm._v(" Inactive ")]
                       ),
                     ]),
                   ]),
@@ -353,7 +367,7 @@ var render = function () {
                       staticClass: "btn btn-info",
                       attrs: { type: "submit", disabled: _vm.form.busy },
                     },
-                    [_vm._v("Save Category")]
+                    [_vm._v("\n                Save Category\n              ")]
                   ),
                   _vm._v(" "),
                   _c(

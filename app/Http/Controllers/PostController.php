@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -38,7 +39,26 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $success=false;
+        $request->validate([
+            'title'=>'required|min:4 max:100',
+            'content'=>'required',
+            'status'=>'required',
+            'category_id'=>'required',
+        ]);
+        Post::create([
+            'title'=>$request->title,
+            'category_id'=>$request->category_id,
+            'user_id'=>auth()->user()->id,
+            'slug'=>$request->title,
+            'content'=>$request->content,
+            'status'=>$request->status,
+            'img'=>'img.jpg'
+            
+        ]);
+        return response()->json([
+            'success'=>$success
+        ],200);
     }
 
     /**

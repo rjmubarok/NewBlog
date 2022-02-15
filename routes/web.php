@@ -40,7 +40,9 @@ Route::get('/edit-employee/{id}',[EmployeesController::class,'edit']);
 Route::post('/update-employee/{id}',[EmployeesController::class,'update']);
 //post
 Route::get('/get-posts', [App\Http\Controllers\PostController::class, 'index']);
-Route::post('/store-post', [App\Http\Controllers\PostController::class, 'store']);
+Route::post('/add-posts', [App\Http\Controllers\PostController::class, 'store']);
 Route::get('/post-remove/{id}', [App\Http\Controllers\PostController::class, 'destroy']);
 Route::post('/post/Change-Status', [App\Http\Controllers\PostController::class, 'ChangeStatus']);
 Route::post('/post/remove-items', [App\Http\Controllers\PostController::class, 'removeitem']);
+//tag
+Route::post('/add/tag', [App\Http\Controllers\TagController::class, 'store']);

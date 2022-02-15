@@ -11,7 +11,7 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <form
+            <form role="form"
               class="form-horizontal"
               @submit.prevent="addPost()"
               enctype="multipart/form-data"
@@ -46,9 +46,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label">
-                    Title</label
-                  >
+                  <label for="inputEmail3" class="col-sm-2 col-form-label"> Title</label>
                   <div class="col-sm-10">
                     <input
                       type="text"
@@ -57,6 +55,7 @@
                       placeholder=" Title"
                       v-model="form.title"
                       name="title"
+                      :class="{ 'is-invalid': form.errors.has('title') }"
                     />
                     <div
                       v-if="form.errors.has('title')"
@@ -66,11 +65,9 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="content" class="col-sm-2 col-form-label"
-                    >Content</label
-                  >
+                  <label for="content" class="col-sm-2 col-form-label">Content</label>
                   <div class="col-sm-10">
-                    <vue-editor v-model="form.content"></vue-editor>
+                    <vue-editor v-model="form.content" ></vue-editor>
                     <div
                       v-if="form.errors.has('content')"
                       v-html="form.errors.get('content')"
@@ -78,9 +75,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="img" class="col-sm-2 col-form-label"
-                    >Tambnail</label
-                  >
+                  <label for="img" class="col-sm-2 col-form-label">Tambnail</label>
                   <div class="col-sm-10">
                     <input
                       type="file"
@@ -89,36 +84,12 @@
                       id="img"
                       @change="loadimage($event)"
                     />
-                    <img :src="form.img" alt=""  height="70px"/>
-                    <div
-                      v-if="form.errors.has('img')"
-                      v-html="form.errors.get('img')"
-                    />
+                    <img :src="form.img" alt="" height="70px" />
+                    <div v-if="form.errors.has('img')" v-html="form.errors.get('img')" />
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label"
-                    >Section</label
-                  >
-                  <div class="col-sm-10">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="section"
-                      placeholder="section"
-                      v-model="form.section"
-                      name="section"
-                    />
-                    <div
-                      v-if="form.errors.has('section')"
-                      v-html="form.errors.get('section')"
-                    />
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="status" class="col-sm-3 col-form-label"
-                    >Status</label
-                  >
+                  <label for="status" class="col-sm-3 col-form-label">Status</label>
                   <div class="col-sm-9">
                     <input
                       class="form-check-input"
@@ -127,9 +98,7 @@
                       id="active"
                       v-model="form.status"
                     />
-                    <label class="form-check-label" for="active">
-                      Active
-                    </label>
+                    <label class="form-check-label" for="active"> Active </label>
                     <input
                       class="form-check-input ml-4"
                       type="radio"
@@ -137,24 +106,17 @@
                       id="Inactive"
                       v-model="form.status"
                     />
-                    <label class="form-check-label ml-5" for="Inactive">
-                      Inactive
-                    </label>
+                    <label class="form-check-label ml-5" for="Inactive"> Inactive </label>
+                    <span :class="{ 'is-invalid': form.errors.has('status') }"></span>
                   </div>
                 </div>
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <button
-                  type="submit"
-                  :disabled="form.busy"
-                  class="btn btn-info"
-                >
+                <button type="submit" :disabled="form.busy" class="btn btn-info">
                   Save
                 </button>
-                <button type="reset" class="btn btn-default float-right">
-                  Cancel
-                </button>
+
               </div>
               <!-- /.card-footer -->
             </form>
@@ -188,7 +150,10 @@ export default {
       status: 1,
     }),
   }),
-
+  mounted() {
+    this.$store.dispatch("getActiveCategories");
+    // this.addPost();
+  },
   computed: {
     GetCategory() {
       return this.$store.getters.getCategories;
@@ -197,31 +162,25 @@ export default {
   methods: {
     addPost() {
       let test = this;
-      // this.form.post("/store-post").then(function (response) {
-
-      //   toastr.success("Post Added Successfully");
-      //   test.form.title = null;
-      //   test.form.content = null;
-      //   test.form.img = null;
-      //   test.form.user_id = null;
-      //   test.form.category_id = null;
-      //   test.form.status = null;
-      // });
+      test.form.post("/add-posts").then(
+        function (response) {
+          toastr.success("Category Added Successfully");
+        }
+      )
+          .catch((err) => console.log(err))
+          .finally(() => (this.loadin = false));
     },
+
     loadimage(e) {
       let test = this;
       let file = e.target.files[0];
       let fileReader = new FileReader();
       fileReader.onload = function (e) {
-        test.form.img=e.target.result
-        
+        test.form.img = e.target.result;
       };
       fileReader.readAsDataURL(file);
     },
   },
-  mounted() {
-    this.$store.dispatch("getActiveCategories");
-    this.addPost();
-  },
+
 };
 </script>

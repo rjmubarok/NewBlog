@@ -5524,6 +5524,18 @@ var routes = [{
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_components_backend_post_create_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/backend/post/create.vue */ "./resources/js/components/backend/post/create.vue"));
   }
+}, {
+  path: '/tags',
+  name: 'tags',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_components_backend_tag_index_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/backend/tag/index.vue */ "./resources/js/components/backend/tag/index.vue"));
+  }
+}, {
+  path: '/add-tag',
+  name: 'tags',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_components_backend_tag_create_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/backend/tag/create.vue */ "./resources/js/components/backend/tag/create.vue"));
+  }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'hash',
@@ -95631,7 +95643,7 @@ module.exports = JSON.parse('{"_from":"axios@^0.21.4","_id":"axios@0.21.4","_inB
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_frontend_about_vue":1,"resources_js_components_backend_dashborad_vue":1,"resources_js_components_backend_category_categories_vue":1,"resources_js_components_backend_category_create_vue":1,"resources_js_components_backend_category_edit_vue":1,"resources_js_components_backend_employees_index_vue":1,"resources_js_components_backend_employees_edit_vue":1,"resources_js_components_backend_employees_create_vue":1,"resources_js_components_backend_post_index_vue":1,"resources_js_components_backend_post_create_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_frontend_about_vue":1,"resources_js_components_backend_dashborad_vue":1,"resources_js_components_backend_category_categories_vue":1,"resources_js_components_backend_category_create_vue":1,"resources_js_components_backend_category_edit_vue":1,"resources_js_components_backend_employees_index_vue":1,"resources_js_components_backend_employees_edit_vue":1,"resources_js_components_backend_employees_create_vue":1,"resources_js_components_backend_post_index_vue":1,"resources_js_components_backend_post_create_vue":1,"resources_js_components_backend_tag_index_vue":1,"resources_js_components_backend_tag_create_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};
