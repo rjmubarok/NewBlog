@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Image;
 
 class PostController extends Controller
 {
@@ -15,10 +17,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts =Post::with('Category','User')->get();
+        $posts = Post::with('Category', 'User')->get();
         return response()->json([
-            'posts'=>$posts
-        ],200);
+            'posts' => $posts,
+        ], 200);
     }
 
     /**
@@ -39,26 +41,41 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $success=false;
+
+        // $strpos = strpos($request->img,';');
+        //  $str = substr($request->img,0, $strpos);
+        //  $files=explode('/',$str);
+        //  echo end($files);
+
+        $success = false;
         $request->validate([
-            'title'=>'required|min:4 max:100',
-            'content'=>'required',
-            'status'=>'required',
-            'category_id'=>'required',
+            'title'       => 'required|max:100|unique:posts',
+            'content'     => 'required',
+            'status'      => 'required',
+            'category_id' => 'required',
         ]);
-        Post::create([
-            'title'=>$request->title,
-            'category_id'=>$request->category_id,
-            'user_id'=>auth()->user()->id,
-            'slug'=>$request->title,
-            'content'=>$request->content,
-            'status'=>$request->status,
-            'img'=>'img.jpg'
-            
+        $file      = explode(';', $request->img);
+        $file      = explode('/', $file[0]);
+        $file_ex   = end($file);
+        $slug      = Str::slug($request->title);
+        $file_name = $slug . '.' . $file_ex;
+
+        $success = Post::create([
+            'title'       => $request->title,
+            'category_id' => $request->category_id,
+            'user_id'     => auth()->user()->id,
+            'slug'        => $slug,
+            'content'     => $request->content,
+            'status'      => $request->status,
+            'img'         => $file_name,
+
         ]);
+        if ($success) {
+            Image::make($request->img)->resize(400, 200)->save(public_path('uploades/posts/') . $file_name);
+        }
         return response()->json([
-            'success'=>$success
-        ],200);
+            'success' => $success,
+        ], 200);
     }
 
     /**
@@ -80,7 +97,10 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post=Post::find($id);
+        return response()->json([
+            'post'=> $post
+        ],200);
     }
 
     /**
@@ -92,7 +112,35 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $success = false;
+        $request->validate([
+            'title'       => 'required|max:100|unique:posts',
+            'content'     => 'required',
+            'status'      => 'required',
+            'category_id' => 'required',
+        ]);
+        $file      = explode(';', $request->img);
+        $file      = explode('/', $file[0]);
+        $file_ex   = end($file);
+        $slug      = Str::slug($request->title);
+        $file_name = $slug . '.' . $file_ex;
+
+        $success = Post::find($id)->update([
+            'title'       => $request->title,
+            'category_id' => $request->category_id,
+            'user_id'     => auth()->user()->id,
+            'slug'        => $slug,
+            'content'     => $request->content,
+            'status'      => $request->status,
+            'img'         => $file_name,
+
+        ]);
+        if ($success) {
+            Image::make($request->img)->resize(400, 200)->save(public_path('uploades/posts/') . $file_name);
+        }
+        return response()->json([
+            'success' => $success,
+        ], 200);
     }
 
     /**
@@ -103,36 +151,43 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::find($id);
-        $post->delete();
+        $post  = Post::find($id);
+        $files = $post->img;
+        if ($post->delete()) {
+            if (file_exists(public_path('uploades/posts/' . $files))) {
+                unlink(public_path('uploades/posts/' . $files));
+            }
+        }
     }
-    public function removeitem(Request $request){
-        $sl =0;
-        foreach($request->ids as $id){
-           $posts=Post::find($id);
+    public function removeitem(Request $request)
+    {
+        $sl = 0;
+        foreach ($request->ids as $id) {
+            $posts = Post::find($id);
             $posts->delete();
             $sl++;
 
         }
-        $success = $sl>0? true:false;
+        $success = $sl > 0 ? true : false;
         return response()->json([
-            'success'=>$success ,
-            'total'=>$sl
-        ],200);
+            'success' => $success,
+            'total'   => $sl,
+        ], 200);
     }
-    public function ChangeStatus(Request $request){
-        $sl =0;
-        foreach($request->ids as $id){
-           $posts=Post::find($id);
-           $posts->status=$request->status;
+    public function ChangeStatus(Request $request)
+    {
+        $sl = 0;
+        foreach ($request->ids as $id) {
+            $posts         = Post::find($id);
+            $posts->status = $request->status;
             $posts->update();
             $sl++;
 
         }
-        $success = $sl>0? true:false;
+        $success = $sl > 0 ? true : false;
         return response()->json([
-            'success'=>$success ,
-            'total'=>$sl
-        ],200);
+            'success' => $success,
+            'total'   => $sl,
+        ], 200);
     }
 }

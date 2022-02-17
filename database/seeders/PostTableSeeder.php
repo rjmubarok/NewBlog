@@ -20,11 +20,12 @@ class PostTableSeeder extends Seeder
         Post::create([
             'user_id'=>rand(1,20),
             'category_id'=>rand(1,10),
+            'slug'=>Str::slug($faker->name,'_'),
             'title'=>$faker->sentence(3),
             'content'=>$faker->paragraph(300),
             'img'=>$faker->imageUrl(),
-            
-            
+
+
         ]);
     }
     }

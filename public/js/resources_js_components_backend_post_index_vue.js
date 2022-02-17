@@ -490,13 +490,17 @@ var render = function () {
                       _c("td", [
                         _vm._v(
                           _vm._s(_vm._f("subString")(post.content, 25)) +
-                            "........."
+                            "'........'"
                         ),
                       ]),
                       _vm._v(" "),
                       _c("td", [
                         _c("img", {
-                          attrs: { src: post.img, alt: "", width: "60px" },
+                          attrs: {
+                            src: _vm.fileLink(post.img),
+                            alt: "",
+                            width: "60px",
+                          },
                         }),
                       ]),
                       _vm._v(" "),

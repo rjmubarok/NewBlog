@@ -47,8 +47,8 @@
                   </td>
                   <td>{{ ++index }}</td>
                   <td>{{ post.title }}</td>
-                  <td>{{ post.content | subString(25) }}.........</td>
-                  <td><img :src="post.img" alt="" width="60px" /></td>
+                  <td>{{ post.content | subString(25)}}'........'</td>
+                  <td><img :src="fileLink(post.img)" alt="" width="60px" /></td>
                   <td>{{ post.category.name }}</td>
                   <td>{{ post.user.name }}</td>
                   <td>
@@ -246,6 +246,7 @@ export default {
           this.selectAll = false;
         });
     },
+    
   },
 };
 </script>

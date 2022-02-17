@@ -14,6 +14,24 @@ Vue.mixin({
             }).then((result) => {
                 if (result.isConfirmed) callback();
             });
+        },
+        loadimage(e) {
+            let test = this;
+            let file = e.target.files[0];
+            console.log(file.type);
+            if (file.type === 'image/jpeg') {
+                let fileReader = new FileReader();
+                fileReader.onload = function(e) {
+                    test.form.img = e.target.result;
+                }
+                fileReader.readAsDataURL(file);
+            } else {
+                toastr.error("Image Must be jpg");
+            }
+
+        },
+        fileLink: function(name) {
+            return 'uploades/posts/' + name;
         }
     },
 })

@@ -80,8 +80,14 @@ const routes = [{
             import ('../components/backend/post/create.vue')
 
 
-    },
-    {
+    }, {
+        path: '/edit-post/:id',
+        name: 'edit-post',
+        component: () =>
+            import ('../components/backend/post/edit.vue')
+
+
+    }, {
         path: '/tags',
         name: 'tags',
         component: () =>

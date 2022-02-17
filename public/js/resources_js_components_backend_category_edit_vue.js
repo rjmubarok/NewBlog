@@ -113,8 +113,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.getsingelcategory();
-    this.updatecategory();
+    this.getsingelcategory(); // this.updatecategory();
   }
 });
 

@@ -1,19 +1,20 @@
 <template>
   <div>
     <div class="row pt-3">
-      <div class="col-md-10 offset-1">
+      <div class="col-md-8 offset-2">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Post</h3>
-            <router-link to="/posts" class="btn btn-success btn-sm float-right"
-              >Posts
-            </router-link>
+            <h3 class="card-title">Update Post</h3>
+            <router-link to="/posts" class="btn btn-success btn-sm float-right">
+              Post</router-link
+            >
+            <!-- {{ this.$route.params.id }} -->
           </div>
           <!-- /.card-header -->
-          <div class="card-body">
+           <div class="card-body">
             <form role="form"
               class="form-horizontal"
-              @submit.prevent="addPost()"
+              @submit.prevent="updatepost()"
               enctype="multipart/form-data"
             >
               <div class="card-body">
@@ -107,76 +108,74 @@
                       v-model="form.status"
                     />
                     <label class="form-check-label ml-5" for="Inactive"> Inactive </label>
-                    <span :class="{ 'is-invalid': form.errors.has('status') }"></span>
                   </div>
                 </div>
               </div>
-              <!-- /.card-body -->
               <div class="card-footer">
                 <button type="submit" :disabled="form.busy" class="btn btn-info">
-                  Save
+                  Update Post
                 </button>
-
+                <button type="reset" class="btn btn-default float-right">Cancel</button>
               </div>
-              <!-- /.card-footer -->
             </form>
           </div>
-          <!-- /.card-body -->
         </div>
-        <!-- /.card -->
-
-        <!-- /.card -->
       </div>
-      <!-- /.col -->
-
-      <!-- /.col -->
     </div>
   </div>
 </template>
 <script>
 import { VueEditor } from "vue2-editor";
 import Form from "vform";
+import axios from "axios";
+
 export default {
-  components: {
+    components: {
     VueEditor,
   },
-  data: () => ({
-    form: new Form({
-      title: null,
+  name: "edit",
+  data() {
+    return {
+      form: new Form({
+       title: null,
       content: null,
       img: null,
       user_id: null,
       category_id: "",
       status: 1,
-    }),
-  }),
+      }),
+    };
+  },
+
+  methods: {
+    updatepost: function () {
+      let test = this;
+         this.form.post(`/update-post/${this.$route.params.id}`).then((Response) => {
+           toastr.success("Post Update Successfully");
+           test.$router.push('/posts');
+
+    });
+
+
+
+    },
+    getPost:function(){
+     axios.get(`/edit-post/${this.$route.params.id}`).then((Response) => {
+      this.form.fill(Response.data.post);
+    });
+    }
+  },
+
   mounted() {
     this.$store.dispatch("getActiveCategories");
-    //  this.addPost();
+    this.getPost();
+
   },
   computed: {
     GetCategory() {
       return this.$store.getters.getCategories;
     },
   },
-  methods: {
-    addPost() {
-      let test = this;
-      test.form.post("/add-posts").then(
-        function (response) {
-          toastr.success("Post Added Successfully");
-          test.form.title=null;
-          test.form.content=null;
-          test.form.status=null;
-          test.form.category_id='';
-          test.form.img='';
-        }
-      )
-          .catch((err) => console.log(err))
-          .finally(() => (this.loadin = false));
-    },
-
-       },
 
 };
 </script>

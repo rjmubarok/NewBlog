@@ -42,6 +42,8 @@ Route::post('/update-employee/{id}',[EmployeesController::class,'update']);
 Route::get('/get-posts', [App\Http\Controllers\PostController::class, 'index']);
 Route::post('/add-posts', [App\Http\Controllers\PostController::class, 'store']);
 Route::get('/post-remove/{id}', [App\Http\Controllers\PostController::class, 'destroy']);
+Route::get('/edit-post/{id}', [App\Http\Controllers\PostController::class, 'edit']);
+Route::post('/update-post/{id}', [App\Http\Controllers\PostController::class, 'update']);
 Route::post('/post/Change-Status', [App\Http\Controllers\PostController::class, 'ChangeStatus']);
 Route::post('/post/remove-items', [App\Http\Controllers\PostController::class, 'removeitem']);
 //tag

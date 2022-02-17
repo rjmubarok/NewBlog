@@ -145,11 +145,11 @@ export default {
          this.form.post(`/update-employee/${this.$route.params.id}`).then((Response) => {
            toastr.success("Employee Update Successfully");
            test.$router.push('/employees');
-      
+
     });
-        
-       
-      
+
+
+
     },
     editEmplopyee:function(){
      axios.get(`/edit-employee/${this.$route.params.id}`).then((Response) => {
@@ -158,7 +158,7 @@ export default {
     }
   },
   mounted() {
-    this.updateEmployee();
+    // this.updateEmployee();
     this.editEmplopyee();
   },
 };

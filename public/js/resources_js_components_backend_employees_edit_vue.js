@@ -171,7 +171,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.updateEmployee();
+    // this.updateEmployee();
     this.editEmplopyee();
   }
 });

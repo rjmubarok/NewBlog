@@ -5436,6 +5436,26 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].mixin({
       }).then(function (result) {
         if (result.isConfirmed) callback();
       });
+    },
+    loadimage: function loadimage(e) {
+      var test = this;
+      var file = e.target.files[0];
+      console.log(file.type);
+
+      if (file.type === 'image/jpeg') {
+        var fileReader = new FileReader();
+
+        fileReader.onload = function (e) {
+          test.form.img = e.target.result;
+        };
+
+        fileReader.readAsDataURL(file);
+      } else {
+        toastr.error("Image Must be jpg");
+      }
+    },
+    fileLink: function fileLink(name) {
+      return 'uploades/posts/' + name;
     }
   }
 });
@@ -5523,6 +5543,12 @@ var routes = [{
   name: 'add-post',
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_components_backend_post_create_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/backend/post/create.vue */ "./resources/js/components/backend/post/create.vue"));
+  }
+}, {
+  path: '/edit-post/:id',
+  name: 'edit-post',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_components_backend_post_edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/backend/post/edit.vue */ "./resources/js/components/backend/post/edit.vue"));
   }
 }, {
   path: '/tags',
@@ -95643,7 +95669,7 @@ module.exports = JSON.parse('{"_from":"axios@^0.21.4","_id":"axios@0.21.4","_inB
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_frontend_about_vue":1,"resources_js_components_backend_dashborad_vue":1,"resources_js_components_backend_category_categories_vue":1,"resources_js_components_backend_category_create_vue":1,"resources_js_components_backend_category_edit_vue":1,"resources_js_components_backend_employees_index_vue":1,"resources_js_components_backend_employees_edit_vue":1,"resources_js_components_backend_employees_create_vue":1,"resources_js_components_backend_post_index_vue":1,"resources_js_components_backend_post_create_vue":1,"resources_js_components_backend_tag_index_vue":1,"resources_js_components_backend_tag_create_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_frontend_about_vue":1,"resources_js_components_backend_dashborad_vue":1,"resources_js_components_backend_category_categories_vue":1,"resources_js_components_backend_category_create_vue":1,"resources_js_components_backend_category_edit_vue":1,"resources_js_components_backend_employees_index_vue":1,"resources_js_components_backend_employees_edit_vue":1,"resources_js_components_backend_employees_create_vue":1,"resources_js_components_backend_post_index_vue":1,"resources_js_components_backend_post_create_vue":1,"resources_js_components_backend_post_edit_vue":1,"resources_js_components_backend_tag_index_vue":1,"resources_js_components_backend_tag_create_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

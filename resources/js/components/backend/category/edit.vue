@@ -89,11 +89,11 @@ export default {
          this.form.post(`/update-category/${this.$route.params.id}`).then((Response) => {
            toastr.success("Category Added Successfully");
            test.$router.push('/categories');
-      
+
     });
-        
-       
-      
+
+
+
     },
     getsingelcategory:function(){
      axios.get(`/edit-category/${this.$route.params.id}`).then((Response) => {
@@ -103,7 +103,7 @@ export default {
   },
   mounted() {
     this.getsingelcategory();
-    this.updatecategory();
+    // this.updatecategory();
   },
 };
 </script>
